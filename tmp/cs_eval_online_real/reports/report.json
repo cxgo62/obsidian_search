@@ -1,0 +1,1056 @@
+{
+  "dataset": {
+    "source_vault": "tmp/cs_eval_online_real/source_copy",
+    "clean_vault": "tmp/cs_eval_online_real/clean_vault",
+    "kept_note_count": 139,
+    "evaluation_note_count": 30,
+    "dropped_note_count": 38
+  },
+  "metrics": {
+    "dataset_note_count": 30,
+    "candidate_note_count": 25,
+    "avg_gt_links_per_note": 1.6,
+    "hit_at_5": 0.26666666666666666,
+    "hit_at_10": 0.26666666666666666,
+    "recall_at_5": 0.20833333333333334,
+    "recall_at_10": 0.20833333333333334,
+    "precision_at_5": 0.20555555555555555,
+    "precision_at_10": 0.20555555555555555,
+    "mrr": 0.23333333333333334,
+    "coverage": 0.26666666666666666
+  },
+  "predictions": [
+    {
+      "note_path": "cs/1-33/1.1 t-test t检验.md",
+      "targets": [
+        "cs/1-33/1 统计显著性.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/1 统计显著性.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/10.2 ABAC 权限模型.md",
+      "targets": [
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "predicted_notes": [
+        "cs/目录/权限系统index.md",
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "top_5": [
+        "cs/目录/权限系统index.md",
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "top_10": [
+        "cs/目录/权限系统index.md",
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "hits_5": [
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "hits_10": [
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "misses_10": [],
+      "false_positives_10": [
+        "cs/目录/权限系统index.md"
+      ]
+    },
+    {
+      "note_path": "cs/1-33/11 事件总线.md",
+      "targets": [
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/11.3 CQRS 命里和查询分离.md",
+      "targets": [
+        "cs/1-33/11 事件总线.md",
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/12.0 分层架构.md",
+        "cs/1-33/11.2 六边形架构.md"
+      ],
+      "top_5": [
+        "cs/1-33/12.0 分层架构.md",
+        "cs/1-33/11.2 六边形架构.md"
+      ],
+      "top_10": [
+        "cs/1-33/12.0 分层架构.md",
+        "cs/1-33/11.2 六边形架构.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/11 事件总线.md",
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "false_positives_10": [
+        "cs/1-33/11.2 六边形架构.md",
+        "cs/1-33/12.0 分层架构.md"
+      ]
+    },
+    {
+      "note_path": "cs/1-33/18.1 故障发现.md",
+      "targets": [
+        "cs/1-33/19 监控报警.md",
+        "cs/1-33/21 全链路压测.md",
+        "cs/1-33/22 混沌工程 故障注入.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/19 监控报警.md",
+        "cs/1-33/21 全链路压测.md",
+        "cs/1-33/22 混沌工程 故障注入.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/19 监控报警.md",
+      "targets": [
+        "cs/1-33/21 全链路压测.md",
+        "cs/1-33/22 混沌工程 故障注入.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/18.1 故障发现.md"
+      ],
+      "top_5": [
+        "cs/1-33/18.1 故障发现.md"
+      ],
+      "top_10": [
+        "cs/1-33/18.1 故障发现.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/21 全链路压测.md",
+        "cs/1-33/22 混沌工程 故障注入.md"
+      ],
+      "false_positives_10": [
+        "cs/1-33/18.1 故障发现.md"
+      ]
+    },
+    {
+      "note_path": "cs/1-33/20 流量预案.md",
+      "targets": [
+        "cs/1-33/21 全链路压测.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/21 全链路压测.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/30.1 阿里云 DRDS(PolarDB-X).md",
+      "targets": [
+        "cs/1-33/30 阿里云 RDS.md",
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/30.1.0 分布式数据库.md"
+      ],
+      "top_5": [
+        "cs/1-33/30.1.0 分布式数据库.md"
+      ],
+      "top_10": [
+        "cs/1-33/30.1.0 分布式数据库.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/30 阿里云 RDS.md",
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "false_positives_10": [
+        "cs/1-33/30.1.0 分布式数据库.md"
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.1.2 数据库ACID.md",
+      "targets": [
+        "cs/34-98/91 XA 2PC 3PC.md",
+        "cs/34-98/95 WAL 预写日志.md",
+        "cs/目录/分布式事务index.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/34-98/91 XA 2PC 3PC.md",
+        "cs/34-98/95 WAL 预写日志.md",
+        "cs/目录/分布式事务index.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/31 阿里云 DTS.md",
+      "targets": [
+        "cs/1-33/30 阿里云 RDS.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/30 阿里云 RDS.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/31.1 mysql bin log.md",
+      "targets": [
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/31 阿里云 DTS.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/32.2.1 全局二级索引.md",
+      "targets": [
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/1-33/32.4 隔离等级.md",
+      "targets": [
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/30.1.2 数据库ACID.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md",
+        "cs/1-33/32.5 MVCC.md"
+      ],
+      "top_5": [
+        "cs/1-33/30.1.2 数据库ACID.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md",
+        "cs/1-33/32.5 MVCC.md"
+      ],
+      "top_10": [
+        "cs/1-33/30.1.2 数据库ACID.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md",
+        "cs/1-33/32.5 MVCC.md"
+      ],
+      "hits_5": [
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "hits_10": [
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "misses_10": [],
+      "false_positives_10": [
+        "cs/1-33/30.1.2 数据库ACID.md",
+        "cs/1-33/32.5 MVCC.md"
+      ]
+    },
+    {
+      "note_path": "cs/1-33/32.5 MVCC.md",
+      "targets": [
+        "cs/34-98/95 WAL 预写日志.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/32.4 隔离等级.md",
+        "cs/1-33/32.1 mysql innodb 死锁问题.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "top_5": [
+        "cs/1-33/32.4 隔离等级.md",
+        "cs/1-33/32.1 mysql innodb 死锁问题.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "top_10": [
+        "cs/1-33/32.4 隔离等级.md",
+        "cs/1-33/32.1 mysql innodb 死锁问题.md",
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/34-98/95 WAL 预写日志.md"
+      ],
+      "false_positives_10": [
+        "cs/1-33/32 MYSQL （innodb）锁 tobe review.md",
+        "cs/1-33/32.1 mysql innodb 死锁问题.md",
+        "cs/1-33/32.4 隔离等级.md"
+      ]
+    },
+    {
+      "note_path": "cs/34-98/71 DDD 下解决多个repo的分布式事务问题.md",
+      "targets": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "predicted_notes": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "top_5": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "top_10": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "hits_5": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "hits_10": [
+        "cs/34-98/94 基于事务表的幂等方案.md"
+      ],
+      "misses_10": [],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/34-98/89 分布式事务 总览.md",
+      "targets": [
+        "cs/34-98/90 rocketMQ 事务消息 两方事务.md",
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "predicted_notes": [
+        "cs/34-98/92.2 seata TCC.md",
+        "cs/34-98/92 seata 分布式事务.md",
+        "cs/目录/分布式事务index.md"
+      ],
+      "top_5": [
+        "cs/34-98/92.2 seata TCC.md",
+        "cs/34-98/92 seata 分布式事务.md",
+        "cs/目录/分布式事务index.md"
+      ],
+      "top_10": [
+        "cs/34-98/92.2 seata TCC.md",
+        "cs/34-98/92 seata 分布式事务.md",
+        "cs/目录/分布式事务index.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/34-98/90 rocketMQ 事务消息 两方事务.md",
+        "cs/34-98/91 XA 2PC 3PC.md"
+      ],
+      "false_positives_10": [
+        "cs/34-98/92 seata 分布式事务.md",
+        "cs/34-98/92.2 seata TCC.md",
+        "cs/目录/分布式事务index.md"
+      ]
+    },
+    {
+      "note_path": "cs/99-160/110 malloc.md",
+      "targets": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "predicted_notes": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "top_5": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "top_10": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "hits_5": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "hits_10": [
+        "cs/99-160/109 内存分配基础.md"
+      ],
+      "misses_10": [],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/99-160/126 embedding.md",
+      "targets": [
+        "cs/99-160/127 graph embedding.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/99-160/127 graph embedding.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/99-160/127 graph embedding.md",
+      "targets": [
+        "cs/99-160/126 embedding.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/99-160/126 embedding.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/99-160/139 BFF（Backends For Frontends）.md",
+      "targets": [
+        "cs/99-160/140 graphql.md"
+      ],
+      "predicted_notes": [
+        "cs/目录/low code index.md"
+      ],
+      "top_5": [
+        "cs/目录/low code index.md"
+      ],
+      "top_10": [
+        "cs/目录/low code index.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/99-160/140 graphql.md"
+      ],
+      "false_positives_10": [
+        "cs/目录/low code index.md"
+      ]
+    },
+    {
+      "note_path": "cs/99-160/165 RTB & DSP.md",
+      "targets": [
+        "cs/99-160/163 eCPM的思路.md",
+        "cs/99-160/166 各类广告的优化目标.md"
+      ],
+      "predicted_notes": [
+        "cs/99-160/166 各类广告的优化目标.md",
+        "cs/99-160/165.1 广告数据 & DMP.md",
+        "cs/99-160/165.2 ssp 供给方平台.md"
+      ],
+      "top_5": [
+        "cs/99-160/166 各类广告的优化目标.md",
+        "cs/99-160/165.1 广告数据 & DMP.md",
+        "cs/99-160/165.2 ssp 供给方平台.md"
+      ],
+      "top_10": [
+        "cs/99-160/166 各类广告的优化目标.md",
+        "cs/99-160/165.1 广告数据 & DMP.md",
+        "cs/99-160/165.2 ssp 供给方平台.md"
+      ],
+      "hits_5": [
+        "cs/99-160/166 各类广告的优化目标.md"
+      ],
+      "hits_10": [
+        "cs/99-160/166 各类广告的优化目标.md"
+      ],
+      "misses_10": [
+        "cs/99-160/163 eCPM的思路.md"
+      ],
+      "false_positives_10": [
+        "cs/99-160/165.1 广告数据 & DMP.md",
+        "cs/99-160/165.2 ssp 供给方平台.md"
+      ]
+    },
+    {
+      "note_path": "cs/99-160/165.2 ssp 供给方平台.md",
+      "targets": [
+        "cs/99-160/161 广告计费模式.md",
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "predicted_notes": [
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "top_5": [
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "top_10": [
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "hits_5": [
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "hits_10": [
+        "cs/99-160/165 RTB & DSP.md"
+      ],
+      "misses_10": [
+        "cs/99-160/161 广告计费模式.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/low code index.md",
+      "targets": [
+        "cs/99-160/140 graphql.md"
+      ],
+      "predicted_notes": [
+        "cs/99-160/139 BFF（Backends For Frontends）.md"
+      ],
+      "top_5": [
+        "cs/99-160/139 BFF（Backends For Frontends）.md"
+      ],
+      "top_10": [
+        "cs/99-160/139 BFF（Backends For Frontends）.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/99-160/140 graphql.md"
+      ],
+      "false_positives_10": [
+        "cs/99-160/139 BFF（Backends For Frontends）.md"
+      ]
+    },
+    {
+      "note_path": "cs/目录/分布式事务index.md",
+      "targets": [
+        "cs/34-98/89 分布式事务 总览.md",
+        "cs/34-98/90 rocketMQ 事务消息 两方事务.md",
+        "cs/34-98/91 XA 2PC 3PC.md",
+        "cs/34-98/92 seata 分布式事务.md"
+      ],
+      "predicted_notes": [
+        "cs/34-98/89 分布式事务 总览.md"
+      ],
+      "top_5": [
+        "cs/34-98/89 分布式事务 总览.md"
+      ],
+      "top_10": [
+        "cs/34-98/89 分布式事务 总览.md"
+      ],
+      "hits_5": [
+        "cs/34-98/89 分布式事务 总览.md"
+      ],
+      "hits_10": [
+        "cs/34-98/89 分布式事务 总览.md"
+      ],
+      "misses_10": [
+        "cs/34-98/90 rocketMQ 事务消息 两方事务.md",
+        "cs/34-98/91 XA 2PC 3PC.md",
+        "cs/34-98/92 seata 分布式事务.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/权限系统index.md",
+      "targets": [
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "predicted_notes": [
+        "cs/1-33/10.2 ABAC 权限模型.md"
+      ],
+      "top_5": [
+        "cs/1-33/10.2 ABAC 权限模型.md"
+      ],
+      "top_10": [
+        "cs/1-33/10.2 ABAC 权限模型.md"
+      ],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/10 RBCA 权限模型.md"
+      ],
+      "false_positives_10": [
+        "cs/1-33/10.2 ABAC 权限模型.md"
+      ]
+    },
+    {
+      "note_path": "cs/目录/架构 index.md",
+      "targets": [
+        "cs/1-33/11 事件总线.md",
+        "cs/1-33/15 软件架构度量.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/11 事件总线.md",
+        "cs/1-33/15 软件架构度量.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/稳定性index.md",
+      "targets": [
+        "cs/1-33/18 稳定性建设思路.md",
+        "cs/1-33/20 流量预案.md",
+        "cs/1-33/21 全链路压测.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/18 稳定性建设思路.md",
+        "cs/1-33/20 流量预案.md",
+        "cs/1-33/21 全链路压测.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/算法 index.md",
+      "targets": [
+        "cs/99-160/100 遗传算法GA.md",
+        "cs/99-160/106 拓扑排序.md",
+        "cs/99-160/107 最短路径.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/99-160/100 遗传算法GA.md",
+        "cs/99-160/106 拓扑排序.md",
+        "cs/99-160/107 最短路径.md"
+      ],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/缓存index.md",
+      "targets": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "predicted_notes": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "top_5": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "top_10": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "hits_5": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "hits_10": [
+        "cs/99-160/112 缓存淘汰策略 TinyLFU.md"
+      ],
+      "misses_10": [],
+      "false_positives_10": []
+    },
+    {
+      "note_path": "cs/目录/高并发 index.md",
+      "targets": [
+        "cs/1-33/30 阿里云 RDS.md"
+      ],
+      "predicted_notes": [],
+      "top_5": [],
+      "top_10": [],
+      "hits_5": [],
+      "hits_10": [],
+      "misses_10": [
+        "cs/1-33/30 阿里云 RDS.md"
+      ],
+      "false_positives_10": []
+    }
+  ],
+  "dropped_notes": [
+    {
+      "note_path": "cs/1-33/1 统计显著性.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "什么是统计显著性",
+          "resolved_path": "reference/什么是统计显著性.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/10.3 BeyondCorp.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "20 启发法 heuristics",
+          "resolved_path": "inner/20 启发法 heuristics.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/10.5 reverse iap.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "75 reverse iap",
+          "resolved_path": "deposit/xh/slip-box/75 reverse iap.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/10.6 系统边界.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "75 reverse iap",
+          "resolved_path": "deposit/xh/slip-box/75 reverse iap.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/18 稳定性建设思路.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "61 认知负荷",
+          "resolved_path": "技术管理/61 认知负荷.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/18.0 稳定性分层建设.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "答辩材料",
+          "resolved_path": "K/述职/2025晋升答辩/答辩材料.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/2 AA测试 & AA波动率.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "AA实验的波动性",
+          "resolved_path": "reference/AA实验的波动性.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.1.1 数据库高可用 HA.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "redis#psync",
+          "resolved_path": "技术笔记/redis.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.1.1.2 CRDT.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "Redis异地多活原理简介",
+          "resolved_path": "reference/Redis异地多活原理简介.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.1.1.2 replica.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "DDIA#c5 备份",
+          "resolved_path": "技术笔记/DDIA.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.1.3 数据库的索引和性能.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "level db",
+          "resolved_path": "技术笔记/level db.md"
+        },
+        {
+          "raw_target": "Lucene 倒排索引原理",
+          "resolved_path": "reference/Lucene 倒排索引原理.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.2.10.1 hash分区的意义.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "1  zettelkasten",
+          "resolved_path": "inner/1  zettelkasten.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.2.11 高可用问题的基础结构.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "kafka#复制",
+          "resolved_path": "技术笔记/kafka.md"
+        },
+        {
+          "raw_target": "redis#psync",
+          "resolved_path": "技术笔记/redis.md"
+        },
+        {
+          "raw_target": "kafka#生产者的配置",
+          "resolved_path": "技术笔记/kafka.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/30.3 crush & jumping hash.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "泊松分布 todo",
+          "resolved_path": "科学/泊松分布 todo.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/32.2.2 B+ tree.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "InnoDB一棵B+树可以存放多少行数据",
+          "resolved_path": "reading/InnoDB一棵B+树可以存放多少行数据.md"
+        },
+        {
+          "raw_target": "InnoDB 中 B+ 树索引的分裂",
+          "resolved_path": "reference/InnoDB 中 B+ 树索引的分裂.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/1-33/33 LSM Tree.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "level db",
+          "resolved_path": "技术笔记/level db.md"
+        },
+        {
+          "raw_target": "RockDB 写放大简单分析",
+          "resolved_path": "reference/RockDB 写放大简单分析.md"
+        },
+        {
+          "raw_target": "level db#compaction",
+          "resolved_path": "技术笔记/level db.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/32.6 True time API (WIP).md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "DDIA#时钟",
+          "resolved_path": "技术笔记/DDIA.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/70 DDD通用语言.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "50 辅导后端的领域对象",
+          "resolved_path": "deposit/xh/slip-box/50 辅导后端的领域对象.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/70.2 深层次模型和柔性设计.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "50 辅导后端的领域对象#session student 课程学生",
+          "resolved_path": "deposit/xh/slip-box/50 辅导后端的领域对象.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/90 rocketMQ 事务消息 两方事务.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "rocketMQ transction message",
+          "resolved_path": "reference/rocketMQ transction message.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/90.0.2 多机房情况下kafka消费不均衡.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "KafkaClient 多机房环境",
+          "resolved_path": "reference/KafkaClient 多机房环境.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/90.1 基于发件箱模式的事务消息.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "如何使用发件箱模式实现微服务的 Saga 编排",
+          "resolved_path": "reference/如何使用发件箱模式实现微服务的 Saga 编排.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/91 XA 2PC 3PC.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "MySQL XA 介绍",
+          "resolved_path": "reference/MySQL XA 介绍.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/91.1 XA在微服务架构下的缺陷.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "带你读透 SEATA 的 AT 模式#Why NOT XA？",
+          "resolved_path": "reference/带你读透 SEATA 的 AT 模式.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/92.1 seata AT模式.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "带你读透 SEATA 的 AT 模式",
+          "resolved_path": "reference/带你读透 SEATA 的 AT 模式.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/92.3 seata SAGA.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "分布式事务：Saga模式",
+          "resolved_path": "reference/分布式事务：Saga模式.md"
+        },
+        {
+          "raw_target": "如何使用发件箱模式实现微服务的 Saga 编排",
+          "resolved_path": "reference/如何使用发件箱模式实现微服务的 Saga 编排.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/95 WAL 预写日志.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "什么是 WAL",
+          "resolved_path": "reference/什么是 WAL.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/34-98/97 工作流和BPM.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "工作流与BPM",
+          "resolved_path": "reference/工作流与BPM.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/111 tcmalloc.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "TCMalloc  Thread-Caching Malloc",
+          "resolved_path": "reference/TCMalloc  Thread-Caching Malloc.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/112.4 hyper log log.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "HyperLogLog in Presto",
+          "resolved_path": "reference/HyperLogLog in Presto.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/113 百分位近似算法  Percentiles  approximate.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "DDIA",
+          "resolved_path": "技术笔记/DDIA.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/115 缓存同步方案.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "kbus#顺序保证",
+          "resolved_path": "K/技术组件/kbus.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/128 向量距离（相似性）搜索.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "pq量化",
+          "resolved_path": "pq量化.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/163 eCPM的思路.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "K/专利/一种pid粒度的策略优化的构想",
+          "resolved_path": "K/专利/一种pid粒度的策略优化的构想.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/171 榜单问题.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "榜单中台",
+          "resolved_path": "K/技术笔记/榜单中台.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/99-160/99 伪随机数.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "1 混沌",
+          "resolved_path": "科学/1 混沌.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/目录/DDD index.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "DDD小猴落地",
+          "resolved_path": "deposit/xh/总结/DDD小猴落地.md"
+        }
+      ]
+    },
+    {
+      "note_path": "cs/目录/数据库 index.md",
+      "external_markdown_refs": [
+        {
+          "raw_target": "level db",
+          "resolved_path": "技术笔记/level db.md"
+        }
+      ]
+    }
+  ]
+}

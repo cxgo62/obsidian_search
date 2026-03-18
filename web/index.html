@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obsidian 关联检索面板</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 24px; color: #222; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+      .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; background: #fff; }
+      h1, h2 { margin: 0 0 12px; }
+      textarea, input { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+      textarea { min-height: 110px; resize: vertical; }
+      .controls { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 8px; margin-top: 10px; }
+      button { padding: 10px 14px; border: 0; border-radius: 8px; background: #0a63ff; color: white; cursor: pointer; }
+      button:disabled { opacity: 0.6; cursor: not-allowed; }
+      .muted { color: #666; font-size: 13px; }
+      .list { margin-top: 12px; display: grid; gap: 10px; }
+      .item { border: 1px solid #eee; border-radius: 8px; padding: 12px; background: #fafafa; }
+      .meta { font-size: 12px; color: #666; margin: 6px 0; }
+      .score-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 10px; }
+      .score-chip { font-size: 12px; background: #eef4ff; color: #1f3e78; border: 1px solid #d9e7ff; border-radius: 999px; padding: 4px 8px; }
+      .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+      .compare-box { border: 1px solid #e6e6e6; border-radius: 8px; background: #fff; padding: 10px; }
+      .compare-title { font-size: 12px; color: #666; margin-bottom: 6px; }
+      .compare-text { font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+      mark { background: #ffe89a; color: inherit; padding: 0 2px; border-radius: 4px; }
+      code { background: #f2f2f2; padding: 2px 5px; border-radius: 6px; }
+      .stats { display: grid; gap: 8px; }
+      .stat { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding: 6px 0; }
+      .full { grid-column: 1 / -1; }
+      .progress-wrap { margin-top: 10px; }
+      .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: #555; margin-bottom: 6px; }
+      progress { width: 100%; height: 14px; }
+      @media (max-width: 900px) { .compare-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <h1>Obsidian 关联检索面板</h1>
+    <div class="muted">用于快速测试“输入文本 -> 关联笔记/段落”以及查看索引统计状态</div>
+
+    <div class="row" style="margin-top: 16px;">
+      <section class="card">
+        <h2>1) 文本关联测试</h2>
+        <textarea id="queryText" placeholder="输入一段文本，例如：隐私威胁模型、索引增量更新、MCP 调用安全策略"></textarea>
+        <div class="controls">
+          <input id="topK" type="number" value="10" min="1" max="100" />
+          <input id="threshold" type="number" value="0.55" min="0" max="1" step="0.01" />
+          <input id="topKAnn" type="text" value="默认" disabled />
+          <button id="searchBtn">开始检索</button>
+        </div>
+        <div class="muted" style="margin-top: 8px;">参数：Top-K / 阈值（top_k_ann 使用后端默认配置）</div>
+      </section>
+
+      <section class="card">
+        <h2>2) 统计面板</h2>
+        <div class="stats" id="statsPanel"></div>
+        <div style="margin-top: 12px;">
+          <div class="controls" style="grid-template-columns: 1fr 1fr 1fr 1fr; margin-top: 0;">
+            <button id="rebuildBtn">全量重建</button>
+            <button id="syncBtn">增量同步</button>
+            <button id="clearBtn">清空历史索引</button>
+            <button id="refreshStatsBtn">刷新统计</button>
+          </div>
+          <input id="apiToken" type="password" placeholder="可选：x-api-token（配置了 api_token 时需要）" style="margin-top: 10px;" />
+          <div id="indexActionMsg" class="muted" style="margin-top: 8px;"></div>
+          <div id="rebuildProgressWrap" class="progress-wrap" style="display: none;">
+            <div class="progress-meta">
+              <span id="rebuildProgressText">0 / 0</span>
+              <span id="rebuildProgressStatus">queued</span>
+            </div>
+            <progress id="rebuildProgressBar" value="0" max="1"></progress>
+          </div>
+        </div>
+      </section>
+
+      <section class="card full">
+        <h2>关联结果</h2>
+        <div id="resultMeta" class="muted">暂无结果</div>
+        <div id="results" class="list"></div>
+      </section>
+    </div>
+
+    <script>
+      const queryTextEl = document.getElementById("queryText");
+      const topKEl = document.getElementById("topK");
+      const thresholdEl = document.getElementById("threshold");
+      const searchBtn = document.getElementById("searchBtn");
+      const resultsEl = document.getElementById("results");
+      const resultMetaEl = document.getElementById("resultMeta");
+      const statsPanelEl = document.getElementById("statsPanel");
+      const refreshStatsBtn = document.getElementById("refreshStatsBtn");
+      const rebuildBtn = document.getElementById("rebuildBtn");
+      const syncBtn = document.getElementById("syncBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const apiTokenEl = document.getElementById("apiToken");
+      const indexActionMsgEl = document.getElementById("indexActionMsg");
+      const rebuildProgressWrapEl = document.getElementById("rebuildProgressWrap");
+      const rebuildProgressTextEl = document.getElementById("rebuildProgressText");
+      const rebuildProgressStatusEl = document.getElementById("rebuildProgressStatus");
+      const rebuildProgressBarEl = document.getElementById("rebuildProgressBar");
+
+      function esc(text) {
+        return String(text)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderStats(data) {
+        const lastJob = data.last_job || {};
+        statsPanelEl.innerHTML = `
+          <div class="stat"><span>目标目录</span><code>${esc(data.target_directory || "-")}</code></div>
+          <div class="stat"><span>Vault Markdown 文件数</span><strong>${esc(data.vault_markdown_files ?? 0)}</strong></div>
+          <div class="stat"><span>已索引文件数</span><strong>${esc(data.indexed_files ?? 0)}</strong></div>
+          <div class="stat"><span>已索引段落数</span><strong>${esc(data.indexed_blocks ?? 0)}</strong></div>
+          <div class="stat"><span>最近任务类型</span><span>${esc(lastJob.job_type || "-")}</span></div>
+          <div class="stat"><span>最近任务状态</span><span>${esc(lastJob.status || "-")}</span></div>
+          <div class="stat"><span>最近任务时间</span><span>${esc(lastJob.created_at || "-")}</span></div>
+        `;
+      }
+
+      async function loadStats() {
+        try {
+          const res = await fetch("/v1/index/dashboard");
+          if (!res.ok) throw new Error("stats request failed");
+          const data = await res.json();
+          renderStats(data);
+        } catch (err) {
+          statsPanelEl.innerHTML = `<div class="muted">统计加载失败：${esc(err.message || err)}</div>`;
+        }
+      }
+
+      function authHeaders() {
+        const token = (apiTokenEl.value || "").trim();
+        if (!token) return {};
+        return { "x-api-token": token };
+      }
+
+      function collectTokens(text) {
+        return (String(text || "").match(/[0-9A-Za-z_]+|[\u4e00-\u9fff]+/g) || []).filter((t) => t.length > 0);
+      }
+
+      function escapeRegExp(text) {
+        return String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+
+      function overlapTokens(a, b) {
+        const bSet = new Set(collectTokens(b).map((t) => t.toLowerCase()));
+        const out = [];
+        for (const token of collectTokens(a)) {
+          if (bSet.has(token.toLowerCase())) out.push(token);
+        }
+        return [...new Set(out)].slice(0, 24);
+      }
+
+      function renderHighlightedText(text, tokens) {
+        const raw = String(text || "");
+        if (!raw) return "";
+        if (!tokens.length) return esc(raw);
+        const pattern = new RegExp(tokens.map((t) => escapeRegExp(t)).sort((x, y) => y.length - x.length).join("|"), "gi");
+        let out = "";
+        let last = 0;
+        let match;
+        while ((match = pattern.exec(raw)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          out += esc(raw.slice(last, start));
+          out += `<mark>${esc(raw.slice(start, end))}</mark>`;
+          last = end;
+          if (pattern.lastIndex === start) pattern.lastIndex += 1;
+        }
+        out += esc(raw.slice(last));
+        return out;
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      function renderRebuildProgress(current, total, jobStatus) {
+        rebuildProgressWrapEl.style.display = "block";
+        rebuildProgressTextEl.textContent = `${current} / ${total}`;
+        rebuildProgressStatusEl.textContent = jobStatus;
+        rebuildProgressBarEl.max = Math.max(total || 0, 1);
+        rebuildProgressBarEl.value = Math.max(current || 0, 0);
+      }
+
+      async function pollRebuildProgress(jobId) {
+        while (true) {
+          const res = await fetch(`/v1/index/job/${jobId}`, { headers: { ...authHeaders() } });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`);
+          const detail = data.detail || {};
+          const current = Number(detail.current_file || 0);
+          const total = Number(detail.total_files || 0);
+          renderRebuildProgress(current, total, data.status || "running");
+          if (["success", "partial_success", "failed"].includes(data.status)) {
+            return data;
+          }
+          await sleep(800);
+        }
+      }
+
+      async function runIndexAction(action) {
+        const actionText = action === "rebuild" ? "全量重建" : "增量同步";
+        indexActionMsgEl.textContent = `${actionText}执行中...`;
+        rebuildBtn.disabled = true;
+        syncBtn.disabled = true;
+        clearBtn.disabled = true;
+        if (action !== "rebuild") {
+          rebuildProgressWrapEl.style.display = "none";
+        }
+        try {
+          const res = await fetch(`/v1/index/${action}`, {
+            method: "POST",
+            headers: { ...authHeaders() },
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            throw new Error(data.detail || `HTTP ${res.status}`);
+          }
+          if (action === "rebuild") {
+            const jobId = data.job_id;
+            renderRebuildProgress(0, 0, data.status || "queued");
+            const final = await pollRebuildProgress(jobId);
+            indexActionMsgEl.textContent = `${actionText}完成：${JSON.stringify(final.detail || {})}`;
+          } else {
+            indexActionMsgEl.textContent = `${actionText}完成：${JSON.stringify(data)}`;
+          }
+          await loadStats();
+        } catch (err) {
+          indexActionMsgEl.textContent = `${actionText}失败：${err.message || err}`;
+        } finally {
+          rebuildBtn.disabled = false;
+          syncBtn.disabled = false;
+          clearBtn.disabled = false;
+        }
+      }
+
+      async function clearAllIndexData() {
+        const ok = window.confirm("确定要清空所有历史索引吗？这只会删除索引数据，不会删除原始笔记文件。");
+        if (!ok) return;
+        indexActionMsgEl.textContent = "清空历史索引执行中...";
+        rebuildProgressWrapEl.style.display = "none";
+        rebuildBtn.disabled = true;
+        syncBtn.disabled = true;
+        clearBtn.disabled = true;
+        try {
+          const res = await fetch("/v1/index/clear", {
+            method: "POST",
+            headers: { ...authHeaders() },
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) {
+            throw new Error(data.detail || `HTTP ${res.status}`);
+          }
+          indexActionMsgEl.textContent = `清空历史索引完成：${JSON.stringify(data)}`;
+          await loadStats();
+        } catch (err) {
+          indexActionMsgEl.textContent = `清空历史索引失败：${err.message || err}`;
+        } finally {
+          rebuildBtn.disabled = false;
+          syncBtn.disabled = false;
+          clearBtn.disabled = false;
+        }
+      }
+
+      function renderResults(data) {
+        const matches = data.matches || [];
+        const queryText = data.query || queryTextEl.value || "";
+        resultMetaEl.textContent = `共返回 ${matches.length} 条关联结果`;
+        if (!matches.length) {
+          resultsEl.innerHTML = `<div class="muted">没有命中结果，可尝试降低阈值。</div>`;
+          return;
+        }
+        resultsEl.innerHTML = matches
+          .map((m) => {
+            const heading = (m.heading_path || []).join(" / ") || "(无标题路径)";
+            const targetText = m.block_text || m.snippet || "";
+            const overlap = overlapTokens(queryText, targetText);
+            return `
+              <article class="item">
+                <div><strong>${esc(m.note_path || "-")}</strong> · <code>${esc(m.block_uid || "-")}</code></div>
+                <div class="score-row">
+                  <span class="score-chip">score=${Number(m.final_score || 0).toFixed(4)}</span>
+                  <span class="score-chip">semantic=${Number(m.semantic || 0).toFixed(4)}</span>
+                  <span class="score-chip">lexical=${Number(m.lexical || 0).toFixed(4)}</span>
+                  <span class="score-chip">graph=${Number(m.graph_boost || 0).toFixed(4)}</span>
+                </div>
+                <div class="meta">匹配段落位置：${esc(heading)} | 字符区间: ${esc(m.char_start)}-${esc(m.char_end)}</div>
+                <div class="compare-grid">
+                  <section class="compare-box">
+                    <div class="compare-title">输入文本命中区域</div>
+                    <div class="compare-text">${renderHighlightedText(queryText, overlap)}</div>
+                  </section>
+                  <section class="compare-box">
+                    <div class="compare-title">相似段落</div>
+                    <div class="compare-text">${renderHighlightedText(targetText, overlap)}</div>
+                  </section>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      async function search() {
+        const text = queryTextEl.value.trim();
+        if (!text) {
+          resultMetaEl.textContent = "请先输入文本";
+          return;
+        }
+        searchBtn.disabled = true;
+        resultMetaEl.textContent = "检索中...";
+        resultsEl.innerHTML = "";
+        try {
+          const payload = {
+            text,
+            top_k: Number(topKEl.value || 10),
+            threshold: Number(thresholdEl.value || 0.55),
+          };
+          const res = await fetch("/v1/query/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error(`query failed: ${res.status}`);
+          const data = await res.json();
+          renderResults(data);
+        } catch (err) {
+          resultMetaEl.textContent = `检索失败：${err.message || err}`;
+        } finally {
+          searchBtn.disabled = false;
+        }
+      }
+
+      searchBtn.addEventListener("click", search);
+      refreshStatsBtn.addEventListener("click", loadStats);
+      rebuildBtn.addEventListener("click", () => runIndexAction("rebuild"));
+      syncBtn.addEventListener("click", () => runIndexAction("sync"));
+      clearBtn.addEventListener("click", clearAllIndexData);
+      loadStats();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: obsidian-search
+Version: 0.1.0
+Summary: Obsidian block-level relation indexing and search service
+Requires-Python: >=3.10
+Requires-Dist: fastapi>=0.115.0
+Requires-Dist: uvicorn>=0.30.0
+Requires-Dist: pydantic>=2.8.0
+Requires-Dist: pydantic-settings>=2.3.0
+Requires-Dist: python-frontmatter>=1.1.0
+Requires-Dist: openai>=1.45.0
+Requires-Dist: tiktoken>=0.7.0
+Requires-Dist: pymilvus>=2.5.0
+Requires-Dist: PyYAML>=6.0.2
+Requires-Dist: prometheus-client>=0.20.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.3.0; extra == "dev"
+Requires-Dist: httpx>=0.27.0; extra == "dev"

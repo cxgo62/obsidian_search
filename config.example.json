@@ -1,0 +1,56 @@
+{
+  "app_name": "obsidian-search",
+  "env": "dev",
+  "bind_host": "127.0.0.1",
+  "bind_port": 8000,
+  "vault_path": "/Users/cx/Library/Mobile Documents/iCloud~md~obsidian/Documents/cx_slip_box",
+  "sqlite_path": "./data/meta.db",
+  "milvus_uri": "./data/milvus.db",
+  "milvus_collection": "obsidian_blocks",
+  "embedding_provider": "qianwen",
+  "embedding_model": "text-embedding-v4",
+  "embedding_dimensions": 1024,
+  "embedding_batch_size": 128,
+  "embedding_api_key": "sk-xxx-your-dashscope-api-key",
+  "embedding_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  "wanqing_api_key": "your-wq-api-key",
+  "wanqing_model": "ep-3qt632-1773306339042123367",
+  "wanqing_base_url": "https://wanqing-api.corp.kuaishou.com/api/gateway/v1/endpoints/embeddings",
+  "include_glob": [
+    "**/*.md"
+  ],
+  "exclude_glob": [
+    "**/.obsidian/**",
+    "**/.trash/**",
+    "**/node_modules/**"
+  ],
+  "exclude_dirs": [],
+  "block_split": {
+    "min_chars": 80,
+    "max_chars": 1200,
+    "window_mode": "SELF_HEADING",
+    "window_neighbors": 1,
+    "index_code_blocks": true
+  },
+  "retrieval": {
+    "top_k": 10,
+    "top_k_ann": 80,
+    "threshold": 0.1,
+    "dedup_sim_threshold": 0.98,
+    "group_by_note": true,
+    "max_hits_per_note": 2,
+    "note_diversity_penalty": 0.08,
+    "min_lexical_gate": 0.2,
+    "min_content_anchor": 0.04,
+    "anchor_penalty_strength": 0.45,
+    "semantic_only_anchor_floor": 0.06,
+    "weights": {
+      "sem": 0.72,
+      "lex": 0.18,
+      "graph": 0.05,
+      "synergy": 0.05
+    }
+  },
+  "poll_interval_sec": 5,
+  "reindex_debounce_ms": 800
+}
