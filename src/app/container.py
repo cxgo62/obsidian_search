@@ -38,6 +38,7 @@ def build_container_from_settings(settings: AppSettings) -> AppContainer:
             dimensions=settings.embedding_dimensions,
             endpoint_url=settings.wanqing_base_url,
             batch_size=settings.embedding_batch_size,
+            allow_pseudo_fallback=settings.allow_pseudo_embedding_fallback,
         )
     else:
         embedder = OpenAIEmbedder(
@@ -46,6 +47,7 @@ def build_container_from_settings(settings: AppSettings) -> AppContainer:
             dimensions=settings.embedding_dimensions,
             base_url=settings.embedding_base_url,
             batch_size=settings.embedding_batch_size,
+            allow_pseudo_fallback=settings.allow_pseudo_embedding_fallback,
         )
     milvus_repo = MilvusRepo(
         uri=settings.milvus_uri,

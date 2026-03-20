@@ -54,7 +54,16 @@ def main() -> None:
         work_root=Path(args.work_root),
         retrieval_overrides=retrieval_overrides or None,
     )
-    print(json.dumps(report["metrics"], ensure_ascii=False, indent=2))
+    print(
+        json.dumps(
+            {
+                "metrics": report["metrics"],
+                "retrieval_config": report["retrieval_config"],
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     print(f"report.json: {Path(args.work_root) / 'reports' / 'report.json'}")
     print(f"report.md: {Path(args.work_root) / 'reports' / 'report.md'}")
 

@@ -28,6 +28,12 @@ class RetrievalWeights(BaseModel):
     synergy: float = 0.05
 
 
+class QueryExpansionConfig(BaseModel):
+    enabled: bool = True
+    max_variants: int = 4
+    min_token_length: int = 2
+
+
 class RetrievalConfig(BaseModel):
     top_k: int = 10
     top_k_ann: int = 80
@@ -40,6 +46,7 @@ class RetrievalConfig(BaseModel):
     min_content_anchor: float = 0.08
     anchor_penalty_strength: float = 0.65
     semantic_only_anchor_floor: float = 0.12
+    query_expansion: QueryExpansionConfig = Field(default_factory=QueryExpansionConfig)
     weights: RetrievalWeights = Field(default_factory=RetrievalWeights)
 
 
@@ -58,7 +65,8 @@ class AppSettings(BaseSettings):
     embedding_provider: Literal["qianwen", "wanqing"] = "qianwen"
     embedding_model: str = "text-embedding-v4"
     embedding_dimensions: int | None = 1024
-    embedding_batch_size: int = 128
+    embedding_batch_size: int = 10
+    allow_pseudo_embedding_fallback: bool = False
     embedding_api_key: str | None = None
     embedding_base_url: str | None = "https://dashscope.aliyuncs.com/compatible-mode/v1"
     wanqing_api_key: str | None = None

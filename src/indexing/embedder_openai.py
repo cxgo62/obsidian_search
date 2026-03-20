@@ -26,10 +26,12 @@ class OpenAIEmbedder:
         dimensions: int | None,
         base_url: str | None = None,
         batch_size: int = 128,
+        allow_pseudo_fallback: bool = False,
     ) -> None:
         self._model = model
         self._dimensions = dimensions
         self._batch_size = batch_size
+        self._allow_pseudo_fallback = allow_pseudo_fallback
         kwargs: dict[str, str] = {}
         if base_url:
             kwargs["base_url"] = base_url
@@ -41,6 +43,8 @@ class OpenAIEmbedder:
         if not values:
             return []
         if self._client is None:
+            if not self._allow_pseudo_fallback:
+                raise RuntimeError("embedding client unavailable: missing OpenAI SDK or API key")
             return [_pseudo_embedding(t, self._dimensions or 256) for t in values]
         try:
             vectors: list[list[float]] = []
@@ -52,6 +56,8 @@ class OpenAIEmbedder:
                 vectors.extend([list(item.embedding) for item in resp.data])
             return vectors
         except Exception as exc:  # pragma: no cover - network/quota/runtime dependent
+            if not self._allow_pseudo_fallback:
+                raise RuntimeError(f"embedding upstream failed: {exc}") from exc
             logger.warning("embedding upstream failed, fallback to pseudo embedding: %s", exc)
             return [_pseudo_embedding(t, self._dimensions or 256) for t in values]
 

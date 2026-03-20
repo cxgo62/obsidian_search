@@ -2,9 +2,52 @@ from __future__ import annotations
 
 from collections import defaultdict
 import math
-from typing import Any
+from typing import Any, Callable, Hashable
 
 from app.config import RetrievalConfig
+
+
+def merge_candidate_lists(
+    candidate_lists: list[list[Any]],
+    key_fn: Callable[[Any], Hashable] | None = None,
+) -> list[Any]:
+    """Merge ranked candidate lists while promoting repeated hits.
+
+    Items that appear in multiple lists are ordered ahead of single-hit items.
+    Ties are broken deterministically by earliest list position and then earliest
+    within-list position.
+    """
+
+    if not candidate_lists:
+        return []
+
+    if key_fn is None:
+        key_fn = _candidate_key
+
+    merged: dict[Hashable, dict[str, Any]] = {}
+    for list_idx, candidates in enumerate(candidate_lists):
+        for item_idx, item in enumerate(candidates):
+            key = key_fn(item)
+            row = merged.get(key)
+            if row is None:
+                merged[key] = {
+                    "item": item,
+                    "hits": 1,
+                    "first_list_idx": list_idx,
+                    "first_item_idx": item_idx,
+                }
+                continue
+            row["hits"] += 1
+            if (list_idx, item_idx) < (row["first_list_idx"], row["first_item_idx"]):
+                row["item"] = item
+                row["first_list_idx"] = list_idx
+                row["first_item_idx"] = item_idx
+
+    ordered = sorted(
+        merged.values(),
+        key=lambda row: (-int(row["hits"]), row["first_list_idx"], row["first_item_idx"]),
+    )
+    return [row["item"] for row in ordered]
 
 
 def fuse_scores(
@@ -124,3 +167,12 @@ def _apply_note_diversity(
 
 def _clamp01(value: float) -> float:
     return max(0.0, min(1.0, float(value)))
+
+
+def _candidate_key(item: Any) -> Hashable:
+    if isinstance(item, dict):
+        if "block_uid" in item:
+            return item["block_uid"]
+        if "candidate_id" in item:
+            return item["candidate_id"]
+    return item

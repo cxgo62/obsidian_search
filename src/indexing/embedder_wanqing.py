@@ -23,12 +23,14 @@ class WanqingEmbedder:
         dimensions: int | None,
         endpoint_url: str,
         batch_size: int = 128,
+        allow_pseudo_fallback: bool = False,
     ) -> None:
         self._api_key = api_key
         self._model = model
         self._dimensions = dimensions
         self._endpoint_url = endpoint_url
         self._batch_size = batch_size
+        self._allow_pseudo_fallback = allow_pseudo_fallback
         self._encoding = tiktoken.get_encoding("cl100k_base") if tiktoken else None
 
     def embed_texts(self, texts: Iterable[str]) -> list[list[float]]:
@@ -36,6 +38,8 @@ class WanqingEmbedder:
         if not values:
             return []
         if not self._api_key:
+            if not self._allow_pseudo_fallback:
+                raise RuntimeError("wanqing embedding client unavailable: missing API key")
             return [_pseudo_embedding(t, self._dimensions or 256) for t in values]
         try:
             vectors: list[list[float]] = []
@@ -49,6 +53,8 @@ class WanqingEmbedder:
                 vectors.extend(_extract_vectors(resp))
             return vectors
         except Exception as exc:  # pragma: no cover - network/quota/runtime dependent
+            if not self._allow_pseudo_fallback:
+                raise RuntimeError(f"wanqing embedding failed: {exc}") from exc
             logger.warning("wanqing embedding failed, fallback to pseudo embedding: %s", exc)
             return [_pseudo_embedding(t, self._dimensions or 256) for t in values]
 

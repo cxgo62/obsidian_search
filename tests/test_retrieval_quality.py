@@ -3,7 +3,7 @@ from __future__ import annotations
 from app.config import BlockSplitConfig, RetrievalConfig
 from app.models import Block, NoteDoc
 from indexing.splitter import build_embedding_inputs
-from query.ranker import fuse_scores
+from query.ranker import fuse_scores, merge_candidate_lists
 from storage.sqlite_repo import SQLiteRepo
 
 
@@ -17,6 +17,41 @@ def test_fuse_scores_limits_repeated_hits_from_same_note() -> None:
     fused = fuse_scores(semantic, [], {}, cfg)
     assert len(fused) == 2
     assert [h["note_path"] for h in fused] == ["A.md", "B.md"]
+
+
+def test_fuse_scores_prefers_multi_signal_hits() -> None:
+    cfg = RetrievalConfig(top_k=3, threshold=0.0)
+    semantic = [
+        {"block_uid": "joint", "note_path": "A.md", "semantic_score": 0.90},
+        {"block_uid": "sem_only", "note_path": "B.md", "semantic_score": 0.92},
+    ]
+    lexical = [
+        {"block_uid": "joint", "note_path": "A.md", "lex_score": 0.86},
+        {"block_uid": "lex_only", "note_path": "C.md", "lex_score": 0.95},
+    ]
+
+    fused = fuse_scores(semantic, lexical, {}, cfg)
+
+    assert fused[0]["block_uid"] == "joint"
+    assert fused[0]["semantic_lexical_synergy"] > 0.0
+
+
+def test_merge_candidate_lists_promotes_repeated_hits_deterministically() -> None:
+    semantic = [
+        {"block_uid": "s1", "note_path": "A.md"},
+        {"block_uid": "shared", "note_path": "B.md"},
+        {"block_uid": "s2", "note_path": "C.md"},
+    ]
+    lexical = [
+        {"block_uid": "l1", "note_path": "D.md"},
+        {"block_uid": "shared", "note_path": "B.md"},
+        {"block_uid": "l2", "note_path": "E.md"},
+    ]
+
+    merged = merge_candidate_lists([semantic, lexical])
+
+    assert [hit["block_uid"] for hit in merged] == ["shared", "s1", "s2", "l1", "l2"]
+    assert merged[0]["note_path"] == "B.md"
 
 
 def test_build_embedding_inputs_sliding_includes_context() -> None:

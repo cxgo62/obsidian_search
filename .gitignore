@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+
+node_modules/
+playwright-report/
+test-results/
+
+tmp/
+
+*.db-shm
+*.db-wal
+*.lock

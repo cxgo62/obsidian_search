@@ -5,6 +5,7 @@ import re
 from typing import Any
 
 from app.config import AppSettings
+from query.query_expansion import expand_query
 from query.ranker import dedup_hits, fuse_scores, group_by_note
 from query.retriever import Retriever
 from storage.sqlite_repo import SQLiteRepo
@@ -123,7 +124,14 @@ class QueryService:
             retrieval_cfg.top_k_ann = max(top_k, retrieval_cfg.top_k_ann)
         if threshold is not None:
             retrieval_cfg.threshold = threshold
-        semantic, lexical = self._retriever.retrieve_for_text(text, top_k_ann=top_k)
+        if retrieval_cfg.query_expansion.enabled:
+            variants = expand_query(text, retrieval_cfg.query_expansion)
+            semantic, lexical = self._retriever.retrieve_for_queries(
+                [variant.text for variant in variants],
+                top_k_ann=retrieval_cfg.top_k_ann,
+            )
+        else:
+            semantic, lexical = self._retriever.retrieve_for_text(text, top_k_ann=retrieval_cfg.top_k_ann)
         boosts = {h["block_uid"]: 0.0 for h in semantic}
         hits = dedup_hits(fuse_scores(semantic, lexical, boosts, retrieval_cfg))
         hits = self._apply_content_anchor_rerank(text, hits, retrieval_cfg)
@@ -176,11 +184,23 @@ class QueryService:
             overlap = len(query_terms & target_terms) / max(1, len(query_terms))
             lexical = float(h.get("lexical", 0.0))
             graph_boost = float(h.get("graph_boost", 0.0))
+            semantic = float(h.get("semantic", 0.0))
+
+            # Keep semantic candidates and down-weight weakly anchored results
+            # instead of hard-dropping them. This avoids false negatives on
+            # paraphrases with low lexical overlap.
+            extra_penalty = 0.0
             if lexical <= 0.05 and graph_boost <= 0.0 and overlap < retrieval_cfg.semantic_only_anchor_floor:
-                continue
+                extra_penalty += 0.20
             if lexical <= 0.10 and overlap < retrieval_cfg.min_content_anchor:
+                extra_penalty += 0.10
+            if semantic < 0.35 and lexical <= 0.05 and graph_boost <= 0.0:
+                extra_penalty += 0.10
+
+            penalty_strength = min(0.95, float(retrieval_cfg.anchor_penalty_strength) + extra_penalty)
+            adjusted = float(h["final_score"]) * (1.0 - penalty_strength * (1.0 - overlap))
+            if adjusted <= 0.0:
                 continue
-            adjusted = float(h["final_score"]) * (1.0 - retrieval_cfg.anchor_penalty_strength * (1.0 - overlap))
             nh = dict(h)
             nh["content_anchor"] = overlap
             nh["final_score"] = adjusted
